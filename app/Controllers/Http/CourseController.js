@@ -2,9 +2,19 @@ const Course = use('App/Models/Course');
 
 class CourseController {
   async index() {
-    const courses = await Course.all();
+    const courses = await Course.query()
+      .with('lessons')
+      .fetch();
 
     return courses;
+  }
+
+  async show({ params }) {
+    const course = await Course.findOrFail(params.id);
+
+    await course.load('lessons');
+
+    return course;
   }
 
   async store({ request }) {
@@ -43,6 +53,12 @@ class CourseController {
     }
 
     return course;
+  }
+
+  async destroy({ params }) {
+    const course = await Course.findOrFail(params.id);
+
+    await course.delete();
   }
 }
 

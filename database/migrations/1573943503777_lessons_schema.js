@@ -5,6 +5,13 @@ class LessonsSchema extends Schema {
   up() {
     this.create('lessons', table => {
       table.increments();
+      table
+        .integer('course_id')
+        .unsigned()
+        .references('id')
+        .inTable('courses')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL');
       table.string('title').notNullable();
       table.text('description');
       table.text('content');

@@ -18,10 +18,10 @@ Route.resource('users', 'UserController').apiOnly();
 
 Route.post('sessions', 'SessionController.store');
 
-Route.resource('groups', 'GroupController')
-  .apiOnly()
-  .middleware('auth');
+Route.group(() => {
+  Route.resource('groups', 'GroupController').apiOnly();
 
-Route.resource('courses', 'CourseController')
-  .apiOnly()
-  .middleware('auth');
+  Route.resource('courses', 'CourseController').apiOnly();
+
+  Route.resource('courses.lessons', 'LessonController').apiOnly();
+}).middleware('auth');

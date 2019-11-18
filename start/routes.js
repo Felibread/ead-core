@@ -18,7 +18,11 @@ Route.resource('users', 'UserController').apiOnly();
 
 Route.post('sessions', 'SessionController.store');
 
+Route.get('files/:id', 'FileController.show');
+
 Route.group(() => {
+  Route.post('files', 'FileController.store');
+
   Route.resource('groups', 'GroupController').apiOnly();
 
   Route.resource('courses', 'CourseController').apiOnly();
